@@ -1,0 +1,380 @@
+Create Table Employees  (
+employee_id int primary key,
+name varchar(100) not null unique,
+department_id int,
+job_title varchar(100) not null,
+salary int,
+manager_id int,
+hire_date date,
+birth_date date,
+email varchar(100))
+
+
+
+insert into Employees values (1,'Alice',101,'Developer',90000,NULL,'6/1/2015','2/20/1990','alice@example.com'),
+(2,'Bob',101,'Developer',95000,1,'5/15/2016','8/15/1992','bob@example.com'),
+(3,'Charlie',102,'Manager',120000,NULL,'3/22/2017','12/11/1985','charlie@example.com'),
+(4,'David',102,'Developer',100000,3,'7/19/2018','11/5/1991','david@example.com'),
+(5,'Eve',103,'HR',85000,NULL,'8/10/2019','4/30/1987','eve@example.com'),
+(6,'Frank',104,'Finance',110000,NULL,'1/12/2020','3/15/1994','frank@example.com'),
+(7,'Grace',101,'Developer',105000,1,'9/25/2020','7/19/1993','grace@example.com'),
+(8,'Heidi',105,'Developer',98000,1,'12/5/2021','9/8/1995','heidi@example.com')
+
+
+create table Departments (
+department_id	int primary key,
+department_name varchar(100)
+)
+
+insert into Departments values (101,'IT'),(102,'HR'),(103,'Finance'),(104,'Marketing'),(105,'Sales')
+
+
+create table Salaries (
+employee_id int primary key,
+salary int)
+
+insert into Salaries values (1,90000),(2,95000),(3,120000),(4,100000),(5,85000),(6,110000),(7,105000),(8,98000)
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+How to retrieve the second-highest salary of an employee?
+
+select max(salary) SHS from [dbo].[Employees] where salary < (select max(salary) from [dbo].[Employees])
+
+How to get the 5th highest salary?
+
+select * from (
+select *,Dense_Rank () over (Order by Salary Desc) Rank from [dbo].[Employees]) as A
+where rank = 5
+
+How do you fetch all employees whose salary is greater than the average salary?
+
+select * from [dbo].[Employees] where [salary] > (select Avg([salary]) from [dbo].[Employees])
+
+Write a query to display the current date and time.
+
+select getdate()
+select sysdatetime()
+
+How to find duplicate records in a table?
+
+select * from (
+select *,Row_Number () over (Partition by employee_id, name, department_id, job_title, salary, manager_id, hire_date, birth_date, email order by (select (null))) Number from [dbo].[Employees]) as A
+where Number > 1
+
+How can you delete duplicate rows?
+
+With CTE1 as (select * from (
+select *,Row_Number () over (Partition by employee_id, name, department_id, job_title, salary, manager_id, hire_date, birth_date, email order by (select (null))) Number from [dbo].[Employees]) as A)
+
+Delete from CTE1 where CTE1.Number > 1
+
+How to get the common records from two tables?
+
+select * from [dbo].[Employees]
+
+intersect
+
+select * from [dbo].[Employees]
+
+
+How to retrieve the last 3 records from a table?
+
+select top 3 * from [dbo].[Employees] order by [employee_id] desc
+
+How do you fetch the top 5 employees with the highest salaries?
+
+select * from (
+select *,Dense_Rank () over (Order by Salary Desc) Rank from [dbo].[Employees]) as A
+where rank <= 5
+
+How to calculate the total salary of all employees?
+
+select sum([salary]) Total_Salary from [dbo].[Employees]
+
+How to write a query to find all employees who joined in the year 2020?
+
+select * from [dbo].[Employees] where year([hire_date]) = 2020
+
+Write a query to find employees whose name starts with 'A'.
+
+select * from [dbo].[Employees] where [name] like 'a%'
+
+How can you find the employees who do not have a manager?
+
+select * from [dbo].[Employees] where [manager_id] is null or [manager_id] = 0
+
+How to find the department with the highest number of employees?
+
+select * from (
+select *,Dense_Rank () over (order by NOE Desc) Rank from (
+select [department_id],COunt([employee_id]) NOE from [dbo].[Employees]
+Group by [department_id]) as A) as A
+where rank =1 
+
+How to get the count of employees in each department?
+
+select [department_id],COunt([employee_id]) NOE from [dbo].[Employees]
+Group by [department_id]
+
+Write a query to fetch employees having the highest salary in each department.
+select * from (
+select [employee_id],[salary],Dense_Rank () Over (partition by [department_id] order by [salary] desc) Rank from [dbo].[Employees]) as a
+where rank = 1
+
+How to write a query to update the salary of all employees by 10%?
+
+update [dbo].[Employees]
+set [salary]=[salary]*1.1
+
+How can you find employees whose salary is between 50,000 and 1,00,000?
+
+select * from [dbo].[Employees] where [salary] between 50000 and 100000
+
+How to find the youngest employee in the organization?
+
+select * from [dbo].[Employees] where [birth_date]= (select max([birth_date]) from [dbo].[Employees])
+
+How to fetch the first and last record from a table?
+
+select top 1 * from [dbo].[Employees]
+
+union 
+
+select top 1 * from (select top 1 * from [dbo].[Employees] order by [employee_id] desc) as a
+
+Write a query to find all employees who report to a  manager = 1
+
+select * from [dbo].[Employees] where [manager_id] = 1
+
+How can you find the total number of departments in the company?
+
+select count([department_id]) NOD from [dbo].[Departments]
+
+How to find the department with the lowest average salary?
+
+select * from (
+select *,Dense_Rank () Over (Order by AVS) Rank from (
+select [department_id],AVg([salary]) AVS from [dbo].[Employees]
+group by [department_id]) as A) as A
+where rank = 1
+
+How to delete all employees from a department in one query?
+
+Delete from [dbo].[Employees]
+
+How to display all employees who have been in the company for more than 5 years?
+
+select * from [dbo].[Employees]
+where [hire_date] < Dateadd(YYYY,-5,Getdate())
+
+How to find the second-largest value from a table?
+
+select max(salary) SHS from [dbo].[Employees] where salary < (select max(salary) from [dbo].[Employees])
+
+How to write a query to remove all records from a table but keep the table structure?
+
+Truncate Table [dbo].[Employees]
+
+How to get the current month’s name?
+
+Select Datename(Month,Getdate())
+
+How to convert a string to lowercase?
+
+select Lower([name]) LC from [dbo].[Employees]
+
+How to find all employees who do not have any subordinates?
+
+select distinct([manager_id]) MNG_ID from [dbo].[Employees] where [employee_id] is null or [employee_id] = 0
+
+How to write a query to check if a table is empty?
+
+select case when exists (select top 1 * from [dbo].[Employees]) Then 'Not Empty' Else 'Empty' End
+
+How to find the second highest salary for each department?
+
+select * from (
+select [employee_id],[salary],Dense_Rank () Over (partition by [department_id] order by [salary] desc) Rank from [dbo].[Employees]) as a
+where rank = 2
+
+Write a query to fetch employees whose salary is a multiple of 10,000.
+
+select * from [dbo].[Employees] where [salary] % 10000 = 0
+
+How to fetch records where a column has null values?
+
+How to write a query to find the total number of employees in each job title?
+
+select [job_title],Count([employee_id]) NOE from [dbo].[Employees]
+Group by [job_title]
+
+Write a query to fetch all employees whose names end with ‘n’.
+ 
+select * from [dbo].[Employees] where [name] like '%n'
+
+How to find all employees who work in both departments 101 and 102?
+
+select * from [dbo].[Employees] where [department_id] = 101
+
+Intersect
+
+select * from [dbo].[Employees] where [department_id] = 102
+
+Write a query to fetch the details of employees with the same salary.
+
+
+select * from [dbo].[Employees] where [salary] in (
+select [salary] from [dbo].[Employees] 
+Group by [salary]
+Having Count([salary]) > 1)
+
+How to update salaries of employees based on their department?
+
+Update [dbo].[Employees]
+set [salary]=*1.1 where [department_id] = 1
+
+How to write a query to list all employees without a department?
+
+select * from [dbo].[Employees] where [department_id] is null or [department_id] = 0
+
+Write a query to find the maximum salary and minimum salary in each department.
+
+select [department_id],Max([salary]) Maximum,Min([salary]) Minimum from [dbo].[Employees]
+Group by [department_id]
+
+How to list all employees hired in the last 6 months?
+
+select * from [dbo].[Employees]
+where [hire_date] >= Dateadd(MM,-6,getdate())
+
+Write a query to display department-wise total and average salary.
+
+select [department_id],Sum([salary]) TS,Avg([salary]) AV from [dbo].[Employees]
+group by [department_id]
+
+How to find employees who joined the company in the same month and year as their manager?
+
+select * from [dbo].[Employees] Emp left join [dbo].[Employees] Mng on Emp.[manager_id]=Mng.[employee_id]
+where year(Emp.[hire_date])=year(Mng.[hire_date]) and Month(Emp.[hire_date])=Month(Mng.[hire_date])
+
+Write a query to count the number of employees whose names start and end with the same letter.
+
+select * from [dbo].[Employees] where left([name],1)= right([name],1)
+
+How to retrieve employee names and salaries in a single string?
+
+select concat([name],' ',[salary]) NS from [dbo].[Employees]
+
+How to find employees whose salary is higher than their manager's salary?
+select * from [dbo].[Employees] Emp left join [dbo].[Employees] Mng on Emp.[manager_id]=Mng.[employee_id]
+where Emp.[salary] > Mng.[salary]
+
+Write a query to get employees who belong to departments with less than 3 employees.
+select * from [dbo].[Employees] where [department_id] in (
+select [department_id] NOE from [dbo].[Employees]
+group by department_id
+Having Count([employee_id]) < 3)
+
+
+How to write a query to find employees with the same  name?
+
+
+select * from [dbo].[Employees] where [name] in (
+select [name] from [dbo].[Employees]
+group by name
+having count([name]) > 1)
+
+How to write a query to delete employees who have been in the company for more than 15 years?
+
+With CTE1 as (select * from [dbo].[Employees] where [hire_date] < Dateadd(YYYY,-15,Getdate()))
+Delete from CTE1
+
+Write a query to list all employees working under the  manager = 1
+
+
+select * from [dbo].[Employees] where [manager_id] = 1
+
+How to find the top 3 highest-paid employees in each department?
+
+
+select * from (
+select *,Dense_Rank () over (Partition by [department_id] Order by [salary] Desc) Rank from [dbo].[Employees]) as a
+where Rank <= 3
+
+Write a query to list all employees with more than 5 years of experience in each department.
+
+select * from [dbo].[Employees] where [hire_date] < Dateadd(YYYY,-5,Getdate())
+
+How to list all employees in departments that have not hired anyone in the past 2 years?
+
+select * from [dbo].[Employees] where [hire_date] >= Dateadd(YYYY,-2,Getdate())
+
+Write a query to find all employees who earn more than the average salary of their department.
+
+With CTE1 as (select * from  [dbo].[Employees]),
+CTE2 as (
+select [department_id],Avg([salary]) AVS from [dbo].[Employees]
+Group by department_id)
+
+select CTE1.[employee_id] FROM CTE1 JOIN CTE2 ON CTE1.[department_id]=CTE2.[department_id]
+WHERE CTE1.[salary] > CTE2.AVS
+
+How to list all managers who have more than 5 subordinates?
+
+SELECT [manager_id],COUNT([employee_id]) NOE FROM [dbo].[Employees]
+WHERE manager_id IS NOT NULL OR manager_id = 0
+GROUP BY manager_id
+Having COUNT([employee_id]) > 5
+
+Write a query to display employee names and hire dates in the format "Name - MM/DD/YYYY".
+
+select concat ([name],' ',format([hire_date],'MM/dd/yyyy')) from Employees
+
+Write a query to display employees grouped by their age brackets (e.g., 20-30, 31-40, etc.).
+
+
+select [employee_id],Case when Age between 20 and 30 then '20-30' when Age between 31 and 40 then '31-40' else '40+' end Age_Bracket from (
+
+select *,Datediff(yyyy,[birth_date],Getdate()) Age from [dbo].[Employees]) as A
+
+How to find the average salary of the top 2 highest-paid employees in each department?
+
+select department_id,Avg(salary) AVS from (
+select * from (
+select [department_id],[salary],Dense_Rank () over (Partition by [department_id] order by [salary] Desc) Rank from [dbo].[Employees]) as A where Rank <= 2) as a
+Group by department_id
+
+How to calculate the percentage of employees in each department?
+
+select count([employee_id]) from [dbo].[Employees]
+
+select [department_id] ,(count([employee_id]) * 100 /(select count([employee_id]) from [dbo].[Employees])) from [dbo].[Employees]
+group by department_id
+
+Write a query to find all employees whose email contains the domain '@example.com'.
+
+select * from [dbo].[Employees] where [email] like '%@example.com'
+
+How to retrieve the year-to-date Salary for each customer?
+
+select [employee_id],[salary],Sum([salary]) Over (Order by [hire_date]) RT from [dbo].[Employees]
+where year([hire_date]) = 2025
+
+Write a query to display the hire date and day of the week for each employee.
+
+select [employee_id],[hire_date],Datepart(weekday,[hire_date]) DOW from [dbo].[Employees]
+
+How to find all employees who are older than 30 years?
+
+select * from [dbo].[Employees] where [birth_date] < dateadd(YYYY,-30,Getdate())
+
+Write a query to display employees grouped by their salary range (e.g., 0-20K, 20K-50K).
+
+select *,Case when [salary] between 0 and 20000 then '0-20K' when [salary] between 20001 and 50000 then '20-50K' else '50K+' end Salary_Range from [dbo].[Employees]
+
+Write a query to display the highest, lowest, and average salary for each job role.
+
+select [job_title],max([salary]) Highest,min([salary]) Lowest,Avg([salary]) AVG from [dbo].[Employees]
+group by job_title
