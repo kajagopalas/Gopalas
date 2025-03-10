@@ -1,0 +1,61 @@
+ID,Name,Age,Gender,Occupation,Country,Salary
+1,Alice,30,Female,Software Dev,USA,95000.00
+2,Bob,25,Male,Designer,Canada,75000.00
+3,Charlie,NULL,Male,Teacher,UK,55000.00
+4,David,38,Male,Engineer,Australia,120000.00
+5,Emma,28,Female,Marketing,Germany,65000.00
+6,Fiona,NULL,Female,Doctor,Ireland,NULL
+7,George,60,Male,Retired,NULL,40000.00
+8,Hannah,22,Female,Student,USA,NULL
+9,Ian,40,Male,Chef,France,50000.00
+10,Julia,29,Female,Architect,Spain,85000.00
+11,NULL,35,Male,Scientist,Italy,100000.00
+12,Ken,42,NULL,Artist,USA,60000.00
+13,Laura,50,Female,Teacher,Canada,70000.00
+14,Michael,NULL,Male,Engineer,Australia,110000.00
+15,Natalie,26,Female,Nurse,UK,NULL
+16,Olivia,33,NULL,Manager,Germany,85000.00
+17,Paul,55,Male,Business Owner,USA,150000.00
+18,Quentin,NULL,NULL,NULL,France,90000.00
+19,Rachel,40,Female,Lawyer,Australia,120000.00
+20,Steve,30,Male,Designer,Canada,75000.00
+21,Tom,27,Male,Teacher,USA,55000.00
+22,Ursula,31,Female,Marketing,Canada,NULL
+23,Victor,45,Male,Architect,UK,95000.00
+24,Wendy,NULL,Female,Designer,Australia,72000.00
+25,Xander,50,Male,Writer,Ireland,50000.00
+26,Yasmine,29,Female,Software Dev,USA,105000.00
+27,Zach,33,Male,Chef,France,NULL
+28,Amanda,25,Female,Student,Canada,0.00
+29,Brian,40,Male,Engineer,Germany,110000.00
+30,Clara,29,Female,Nurse,UK,80000.00
+31,Derek,42,Male,Doctor,Australia,130000.00
+32,Evelyn,NULL,Female,Scientist,USA,98000.00
+33,Finn,35,Male,Architect,Ireland,90000.00
+34,Grace,26,Female,Manager,Spain,70000.00
+35,Harry,32,Male,Artist,UK,60000.00
+36,Isabel,30,Female,Marketing,USA,65000.00
+37,Jake,28,Male,Doctor,Australia,NULL
+38,Kelly,45,Female,Business Owner,Canada,145000.00
+39,Louis,38,Male,Chef,Ireland,72000.00
+40,Monica,37,Female,Teacher,USA,58000.00
+41,Nathan,33,Male,Scientist,Canada,110000.00
+42,Olivia,28,Female,Architect,USA,90000.00
+43,Peter,NULL,Male,Engineer,UK,120000.00
+44,Quinn,38,Female,Manager,Germany,95000.00
+45,Rosa,41,Female,Designer,France,NULL
+46,Sam,50,Male,Retired,Australia,40000.00
+47,Tara,29,Female,Doctor,USA,105000.00
+48,Ursula,36,Female,Business Owner,Spain,150000.00
+49,Vince,40,Male,Chef,Canada,55000.00
+50,Wendy,27,Female,Marketing,USA,NULL
+51,Xavier,48,Male,Lawyer,Ireland,130000.00
+52,Yara,32,Female,Software Dev,UK,110000.00
+53,Zachary,34,Male,Teacher,Australia,65000.00
+54,Adrian,50,Male,Doctor,Canada,100000.00
+55,Beatrice,NULL,Female,Writer,USA,80000.00
+56,Carl,45,Male,Architect,Germany,95000.00
+57,Diana,29,Female,Nurse,USA,60000.00
+58,Elias,41,Male,Chef,UK,80000.00
+59,Fiona,33,Female,Manager,Ireland,NULL
+60,Greg,38,Male,Scientist,Australia,115000.00
